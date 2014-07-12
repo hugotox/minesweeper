@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cerulean/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.js"></script>
+    <title>Minesweeper by Hugo Pineda</title>
+</head>
+<body ng-app="MinesweeperApp">
+
+<div class="container" ng-controller="MinesweeperCtrl">
+
+    <h1>Minesweeper!</h1>
+
+    <div class="well" ng-style="{'width': containerWidth}">
+        <h3>Discover the hidden mines!</h3>
+        <br/> Click the smiley button when you think you are done or click "New game" to start over. <br/>
+        <br/>
+
+        <button class="btn btn-info" title="Validate" ng-click="validateGame()">
+            <i class="fa fa-smile-o"></i>
+        </button>
+
+        <button class="btn btn-default" ng-click="newGame()">New game</button>
+
+        <br/><br/>
+
+        <div class="the-grid" ng-style="{'width': gridWidth}">
+
+            <div class="a-row" ng-repeat="row in makeArray(rows) track by $index">
+                <div class="a-tile" ng-repeat="tile in makeArray(columns) track by $index"
+                    ng-click="tileClickHandler($parent.$index, $index)">
+                    <!--uncomment the next line for debugging purposes:-->
+                    <!--<div>{{minesGrid[getMinesGridIndex($parent.$index, $index)].hasMine}}</div>-->
+                    <div>{{minesGrid[getMinesGridIndex($parent.$index, $index)].neighborCoveringMineCount}}</div>
+                    <div ng-show="!gameOn && minesGrid[getMinesGridIndex($parent.$index, $index)].hasMine">
+                        <i class="fa fa-bomb"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="clear"></div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
